@@ -25,7 +25,9 @@ document.getElementById("getWeather").addEventListener("click", () => {
   }
 
   const { lat, lon } = JSON.parse(selected);
-  const url = `http://www.7timer.info/bin/api.pl?lon=${lon}&lat=${lat}&product=civil&output=json`;
+
+  // ✅ Fixed CORS issue using proxy
+  const url = `https://corsproxy.io/?http://www.7timer.info/bin/api.pl?lon=${lon}&lat=${lat}&product=civil&output=json`;
 
   output.innerHTML = ""; // Clear old forecast
   status.textContent = "⏳ Loading forecast...";
