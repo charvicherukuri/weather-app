@@ -14,6 +14,17 @@ fetch("city_coordinates.csv")
     });
   });
 
+// Format time like "3:00 PM" given hours ahead
+function formatFutureTime(hoursAhead) {
+  const now = new Date();
+  now.setHours(now.getHours() + hoursAhead);
+
+  const hour = now.getHours();
+  const formattedHour = hour % 12 === 0 ? 12 : hour % 12;
+  const ampm = hour >= 12 ? "PM" : "AM";
+  return `${formattedHour}:00 ${ampm}`;
+}
+
 document.getElementById("getWeather").addEventListener("click", () => {
   const selected = document.getElementById("citySelect").value;
   const output = document.getElementById("forecast");
@@ -26,8 +37,9 @@ document.getElementById("getWeather").addEventListener("click", () => {
 
   const { lat, lon } = JSON.parse(selected);
 
- const url = `https://api.allorigins.win/raw?url=${encodeURIComponent(`http://www.7timer.info/bin/api.pl?lon=${lon}&lat=${lat}&product=civil&output=json`)}`;
-
+  const url = `https://api.allorigins.win/raw?url=${encodeURIComponent(
+    `http://www.7timer.info/bin/api.pl?lon=${lon}&lat=${lat}&product=civil&output=json`
+  )}`;
 
   output.innerHTML = ""; // Clear old forecast
   status.textContent = "⏳ Loading forecast...";
@@ -44,13 +56,15 @@ document.getElementById("getWeather").addEventListener("click", () => {
         card.className = "forecast-card";
         card.style.animationDelay = `${index * 0.1}s`;
 
+        const label = formatFutureTime(item.timepoint);
+
         card.innerHTML = `
-          <h3>+${item.timepoint} hrs</h3>
-          <img src="images/${iconName}.png" alt="${item.prec_type}" width="60" 
+          <h3>${label}</h3>
+          <img src="images/${iconName}.png" alt="${item.prec_type}" width="60"
                title="Cloud: ${item.cloudcover}, Precip: ${item.prec_type}">
           <p><strong>Temp:</strong> ${item.temp2m}°C</p>
           <p><strong>Precip:</strong> ${item.prec_type}</p>
-          <p><strong>Cloud Cover:</strong> ${item.cloudcover}</p>
+          <p><strong>Cloud Cover:</strong> ${item.cloudcover}/8</p>
         `;
 
         output.appendChild(card);
@@ -70,6 +84,7 @@ function getIconName(item) {
   if (precip === "rain") return "lightrain";
   if (precip === "snow") return "snow";
   if (precip === "ts") return "tstorm";
+
   if (precip === "none") {
     if (cloud <= 3) return "clear";
     if (cloud <= 6) return "pcloudy";
