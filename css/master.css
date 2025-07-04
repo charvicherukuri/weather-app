@@ -1,6 +1,83 @@
+/* ====== Base Styles ====== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
 body {
-    background-color: #d7d7d7;
-    color: black;
+  background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  color: #000;
+}
+
+/* ====== Container ====== */
+.background-wrapper {
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+}
+
+.weather-container {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ====== Title ====== */
+.app-title {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+/* ====== Dropdown ====== */
+.dropdown-label {
+  display: block;
+  margin: 10px 0 5px;
+  font-size: 1rem;
+}
+
+.city-dropdown {
+  padding: 10px 15px;
+  font-size: 1rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+/* ====== Button ====== */
+.get-weather-btn {
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.get-weather-btn:hover {
+  background-color: #0056cc;
+}
+
+/* ====== Forecast Section ====== */
+#statusMessage {
+  margin-top: 15px;
+  font-style: italic;
+  color: #333;
 }
 
 #forecast {
@@ -18,9 +95,8 @@ body {
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
   width: 150px;
   text-align: center;
-}
 
-.forecast-card {
+  /* Animation */
   opacity: 0;
   transform: translateY(20px);
   animation: fadeInUp 0.5s ease forwards;
@@ -38,8 +114,17 @@ body {
   }
 }
 
+/* ====== Responsive Design ====== */
 @media screen and (max-width: 600px) {
   .forecast-card {
     width: 90%;
+  }
+
+  .weather-container {
+    padding: 20px;
+  }
+
+  .app-title {
+    font-size: 1.5rem;
   }
 }
